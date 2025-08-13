@@ -140,6 +140,7 @@ li {
   /* nav active page */
   .nav-links a[aria-current="page"] {
     background-color: var(--primary);
+    color: var(--theme-light);
   }
 
   /* product thumbnail active */

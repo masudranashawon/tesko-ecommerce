@@ -1,11 +1,19 @@
+"use client";
+
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <header className="header-section bg-persian-red font-primary text-white">
-      {/* Top Header  */}
-      <div className="container flex h-auto flex-col flex-wrap justify-between gap-2 py-3 md:h-20 md:flex-row md:flex-nowrap md:items-center md:gap-0">
+    // <header className="header-section bg-persian-red font-primary text-white">
+
+    /* Top Header  */
+    <>
+      <div className="bg-persian-red font-primary container flex h-auto flex-col flex-wrap justify-between gap-2 py-3 text-white md:h-20 md:flex-row md:flex-nowrap md:items-center md:gap-0">
         {/* Logo and Location  */}
         <div className="flex items-center justify-between gap-2 md:justify-start lg:gap-5 rtl:space-x-reverse">
           <Link href="/">
@@ -132,7 +140,7 @@ const Header = () => {
       </div>
 
       {/* Bottom Header  */}
-      <nav className="border-b bg-[#F2F8FD]">
+      <nav className="sticky top-0 z-50 border-b bg-[#F2F8FD]">
         <div className="relative container flex flex-wrap items-center justify-between md:flex-nowrap md:justify-start">
           {/* All Departments  */}
           <div className="group relative flex h-full py-5">
@@ -238,7 +246,7 @@ const Header = () => {
                                         <Image
                                           src="/assests/images/feature-product-1.png"
                                           alt=" Samsung Electronics Samsung Galexy S21
-                                          5G"
+                                            5G"
                                           className="h-full w-full object-contain"
                                           width={300}
                                           height={300}
@@ -497,11 +505,11 @@ const Header = () => {
 
           {/* Toggle Menu Button Mobile  */}
           <button
-            data-collapse-toggle="navbar-multi-level"
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none md:hidden"
+            className="text-persian-blue inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none md:hidden"
             aria-controls="navbar-multi-level"
-            aria-expanded="false"
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -523,10 +531,35 @@ const Header = () => {
 
           {/* Nav Links  */}
           <div
-            className="nav-links hidden w-full md:block md:w-auto"
+            className={cn(
+              "eq nav-links text-persian-blue bg-theme-light fixed top-0 right-0 z-50 h-full w-64 shadow-lg ease-in-out md:static md:block md:w-auto md:bg-transparent md:shadow-none",
+              mobileMenuOpen
+                ? "translate-x-0"
+                : "translate-x-full md:block md:translate-x-0"
+            )}
             id="navbar-multi-level"
           >
-            <ul className="md:text-persian-blue mt-4 flex flex-col rounded-lg border border-gray-100 p-3 font-light md:ms-4 md:mt-0 md:flex-row md:flex-wrap md:space-x-3 md:border-0 md:p-0 md:text-sm lg:space-x-8 lg:p-4 lg:text-base rtl:space-x-reverse">
+            {/* Close button for mobile */}
+            <button
+              type="button"
+              className="text-persian-red absolute top-4 right-4 hover:text-gray-700 md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <ul className="md:text-persian-blue mt-16 flex flex-col rounded-lg border border-gray-100 p-3 font-light md:ms-4 md:mt-0 md:flex-row md:flex-wrap md:space-x-3 md:border-0 md:p-0 md:text-sm lg:space-x-8 lg:p-4 lg:text-base rtl:space-x-reverse">
               <li>
                 <Link
                   href="/"
@@ -595,8 +628,17 @@ const Header = () => {
             </ul>
           </div>
         </div>
+
+        {/* Overlay for mobile menu */}
+        {mobileMenuOpen && (
+          <div
+            className="bg-theme-dark/40 fixed inset-0 z-40 backdrop-blur-sm md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
       </nav>
-    </header>
+    </>
+    // </header>
   );
 };
 
