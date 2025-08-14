@@ -103,7 +103,7 @@ li {
     padding: 1.5rem 0;
   }
 
-  header select:not([size])#country-select {
+  .top-header select:not([size])#country-select {
     background-image: none !important;
   }
 
