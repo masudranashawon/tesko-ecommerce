@@ -1,3 +1,75 @@
+"use client";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import { FaStar } from "react-icons/fa";
+import { FaBoltLightning, FaStarHalfStroke } from "react-icons/fa6";
+import "swiper/css";
+import Link from "next/link";
+import Image from "next/image";
+
+const slides = [
+  {
+    img: "/assests/images/light-deal-1.png",
+    alt: "Model wearing a jacket",
+    price: "25.00",
+    sold: "4.5K+ Sold",
+    time: "1:12:53.55",
+    progress: "95%",
+    rating: 5,
+  },
+  {
+    img: "/assests/images/light-deal-2.png",
+    alt: "Ladies Vanity Bag",
+    price: "40.00",
+    sold: "8.2K+ Sold",
+    time: "0:45:53.55",
+    progress: "95%",
+    rating: 3.5,
+  },
+  {
+    img: "/assests/images/light-deal-3.png",
+    alt: "Exclusive shoe's for Boy's",
+    price: "30.00",
+    sold: "1.9K+ Sold",
+    time: "18:13:45.12",
+    progress: "65%",
+    rating: 4.5,
+  },
+  {
+    img: "/assests/images/light-deal-4.png",
+    alt: "A man wearing a Yellow T-Shirt & Black Short Pant",
+    price: "99.99",
+    sold: "0.5K+ Sold",
+    time: "12:11:14.17",
+    progress: "45%",
+    rating: 5,
+  },
+  {
+    img: "/assests/images/light-deal-5.png",
+    alt: "Electronics Accessories By Apple",
+    price: "299.99",
+    sold: "10.5K+ Sold",
+    time: "0:50:13.45",
+    progress: "25%",
+    rating: 5,
+  },
+];
+
+const renderStars = (rating) => {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 !== 0;
+  return (
+    <>
+      {[...Array(fullStars)].map((_, i) => (
+        <FaStar key={i} />
+        // <i key={i} className="fa-solid fa-star" />
+      ))}
+      {halfStar && <FaStarHalfStroke />}
+    </>
+  );
+};
+
 const LightDealsSection = () => {
   return (
     <section className="light-deals-section">
@@ -54,19 +126,38 @@ const LightDealsSection = () => {
 
       {/* light deals swiper carousel */}
       <div className="container">
-        <div className="swiper lightDealsSwiper">
-          <div className="swiper-wrapper">
-            {/* slide 1 */}
-            <div className="swiper-slide px-1 py-5">
-              <a
-                href="#"
+        <Swiper
+          className="lightDealsSwiper"
+          modules={[Autoplay]}
+          slidesPerView={1}
+          spaceBetween={5}
+          grabCursor={true}
+          loop={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          breakpoints={{
+            680: { slidesPerView: 2 },
+            768: { slidesPerView: 2, spaceBetween: 5 },
+            1024: { slidesPerView: 3, spaceBetween: 10 },
+            1280: { slidesPerView: 4 },
+          }}
+        >
+          {slides.map((slide, idx) => (
+            <SwiperSlide key={idx} className="px-1 py-5">
+              <Link
+                href=""
                 className="product-card eq group block w-full rounded-lg p-3 hover:shadow-lg"
               >
                 {/* slide image */}
                 <div className="card-image relative h-[16.5rem] overflow-hidden rounded-lg">
-                  <img
-                    src="./assests/images/light-deal-1.png"
-                    alt="Model wearing a jacket"
+                  <Image
+                    src={slide.img}
+                    alt={slide.alt}
+                    width={300}
+                    height={300}
                     className="eq h-full w-full object-cover group-hover:scale-125"
                   />
                   <span className="absolute bottom-9 left-1/2 block w-3/5 -translate-x-1/2 rounded-full bg-white px-4 py-3 text-center text-sm">
@@ -77,277 +168,41 @@ const LightDealsSection = () => {
                 <div className="card-content mt-2 space-y-1">
                   {/* price & sold info */}
                   <div className="price-sold-amount flex items-center gap-2">
-                    <h2 className="text-primary text-2xl font-bold">
-                      <span>
-                        <i className="fa-solid fa-bolt text-[#ffa755]" />
+                    <h2 className="text-primary flex items-center gap-1 text-2xl font-bold">
+                      <span className="text-[#ffa755]">
+                        <FaBoltLightning />
                       </span>
                       <span className="align-middle text-xs text-[#ffa755]">
                         $
                       </span>
-                      25.00
+                      {slide.price}
                     </h2>
-                    <p className="text-base">4.5K+ Sold</p>
+                    <p className="text-base">{slide.sold}</p>
                   </div>
                   {/* time */}
                   <div className="time-progres flex flex-wrap items-center gap-2">
                     <div className="h-2 w-[60%] rounded-full bg-gray-200">
                       <div
                         className="progress bg-primary h-2 rounded-full"
-                        style={{ width: "95%" }}
+                        style={{ width: slide.progress }}
                       />
                     </div>
                     <span className="due-time flex-no-wrap inline-flex w-[35%] items-center gap-1 text-sm">
-                      <i className="fa-regular fa-clock" /> 1:12:53.55
+                      <i className="fa-regular fa-clock" /> {slide.time}
                     </span>
                   </div>
                   {/* rating */}
                   <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow text-xs">
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
+                    <div className="rating-stars text-light-yellow flex items-center text-xs">
+                      {renderStars(slide.rating)}
                     </div>
                     <span className="text-primary text-sm">Final Hours</span>
                   </div>
                 </div>
-              </a>
-            </div>
-            {/* slide 2 */}
-            <div className="swiper-slide px-1 py-5">
-              <a
-                href="#"
-                className="product-card eq group block w-full rounded-lg p-3 hover:shadow-lg"
-              >
-                {/* slide image */}
-                <div className="card-image relative h-[16.5rem] overflow-hidden rounded-lg">
-                  <img
-                    src="./assests/images/light-deal-2.png"
-                    alt="Ladies Vanity Bag"
-                    className="eq h-full w-full object-cover group-hover:scale-125"
-                  />
-                  <span className="absolute bottom-9 left-1/2 block w-3/5 -translate-x-1/2 rounded-full bg-white px-4 py-3 text-center text-sm">
-                    Almost Sold Out
-                  </span>
-                </div>
-                {/* Slide Content */}
-                <div className="card-content mt-2 space-y-1">
-                  {/* price & sold info */}
-                  <div className="price-sold-amount flex items-center gap-2">
-                    <h2 className="text-primary text-2xl font-bold">
-                      <span>
-                        <i className="fa-solid fa-bolt text-[#ffa755]" />
-                      </span>
-                      <span className="align-middle text-xs text-[#ffa755]">
-                        $
-                      </span>
-                      40.00
-                    </h2>
-                    <p className="text-base">8.2K+ Sold</p>
-                  </div>
-                  {/* time */}
-                  <div className="time-progres flex flex-wrap items-center gap-2">
-                    <div className="h-2 w-[60%] rounded-full bg-gray-200">
-                      <div
-                        className="progress bg-primary h-2 rounded-full"
-                        style={{ width: "95%" }}
-                      />
-                    </div>
-                    <span className="due-time flex-no-wrap inline-flex w-[35%] items-center gap-1 text-sm">
-                      <i className="fa-regular fa-clock" /> 0:45:53.55
-                    </span>
-                  </div>
-                  {/* rating */}
-                  <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow text-xs">
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                    </div>
-                    <span className="text-primary text-sm">Final Hours</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-            {/* slide 3 */}
-            <div className="swiper-slide px-1 py-5">
-              <a
-                href="#"
-                className="product-card eq group block w-full rounded-lg p-3 hover:shadow-lg"
-              >
-                {/* slide image */}
-                <div className="card-image relative h-[16.5rem] overflow-hidden rounded-lg">
-                  <img
-                    src="./assests/images/light-deal-3.png"
-                    alt="Exclusive shoe's for Boy's"
-                    className="eq h-full w-full object-cover group-hover:scale-125"
-                  />
-                  <span className="absolute bottom-9 left-1/2 block w-3/5 -translate-x-1/2 rounded-full bg-white px-4 py-3 text-center text-sm">
-                    Almost Sold Out
-                  </span>
-                </div>
-                {/* Slide Content */}
-                <div className="card-content mt-2 space-y-1">
-                  {/* price & sold info */}
-                  <div className="price-sold-amount flex items-center gap-2">
-                    <h2 className="text-primary text-2xl font-bold">
-                      <span>
-                        <i className="fa-solid fa-bolt text-[#ffa755]" />
-                      </span>
-                      <span className="align-middle text-xs text-[#ffa755]">
-                        $
-                      </span>
-                      30.00
-                    </h2>
-                    <p className="text-base">1.9K+ Sold</p>
-                  </div>
-                  {/* time */}
-                  <div className="time-progres flex flex-wrap items-center gap-2">
-                    <div className="h-2 w-[60%] rounded-full bg-gray-200">
-                      <div
-                        className="progress bg-primary h-2 rounded-full"
-                        style={{ width: "65%" }}
-                      />
-                    </div>
-                    <span className="due-time flex-no-wrap inline-flex w-[35%] items-center gap-1 text-sm">
-                      <i className="fa-regular fa-clock" /> 18:13:45.12
-                    </span>
-                  </div>
-                  {/* rating */}
-                  <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow text-xs">
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star-half-stroke" />
-                    </div>
-                    <span className="text-primary text-sm">Final Hours</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-            {/* slide 4 */}
-            <div className="swiper-slide px-1 py-5">
-              <a
-                href="#"
-                className="product-card eq group block w-full rounded-lg p-3 hover:shadow-lg"
-              >
-                {/* slide image */}
-                <div className="card-image relative h-[16.5rem] overflow-hidden rounded-lg">
-                  <img
-                    src="./assests/images/light-deal-4.png"
-                    alt="A man wearing a Yellow T-Shirt & Black Short Pant"
-                    className="eq h-full w-full object-cover group-hover:scale-125"
-                  />
-                  <span className="absolute bottom-9 left-1/2 block w-3/5 -translate-x-1/2 rounded-full bg-white px-4 py-3 text-center text-sm">
-                    Almost Sold Out
-                  </span>
-                </div>
-                {/* Slide Content */}
-                <div className="card-content mt-2 space-y-1">
-                  {/* price & sold info */}
-                  <div className="price-sold-amount flex items-center gap-2">
-                    <h2 className="text-primary text-2xl font-bold">
-                      <span>
-                        <i className="fa-solid fa-bolt text-[#ffa755]" />
-                      </span>
-                      <span className="align-middle text-xs text-[#ffa755]">
-                        $
-                      </span>
-                      99.99
-                    </h2>
-                    <p className="text-base">0.5K+ Sold</p>
-                  </div>
-                  {/* time */}
-                  <div className="time-progres flex flex-wrap items-center gap-2">
-                    <div className="h-2 w-[60%] rounded-full bg-gray-200">
-                      <div
-                        className="progress bg-primary h-2 rounded-full"
-                        style={{ width: "45%" }}
-                      />
-                    </div>
-                    <span className="due-time flex-no-wrap inline-flex w-[35%] items-center gap-1 text-sm">
-                      <i className="fa-regular fa-clock" /> 12:11:14.17
-                    </span>
-                  </div>
-                  {/* rating */}
-                  <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow text-xs">
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                    </div>
-                    <span className="text-primary text-sm">Final Hours</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-            {/* slide 5 */}
-            <div className="swiper-slide px-1 py-5">
-              <a
-                href="#"
-                className="product-card eq group block w-full rounded-lg p-3 hover:shadow-lg"
-              >
-                {/* slide image */}
-                <div className="card-image relative h-[16.5rem] overflow-hidden rounded-lg">
-                  <img
-                    src="./assests/images/light-deal-5.png"
-                    alt="Electronics Accessories By Apple"
-                    className="eq h-full w-full object-cover group-hover:scale-125"
-                  />
-                  <span className="absolute bottom-9 left-1/2 block w-3/5 -translate-x-1/2 rounded-full bg-white px-4 py-3 text-center text-sm">
-                    Almost Sold Out
-                  </span>
-                </div>
-                {/* Slide Content */}
-                <div className="card-content mt-2 space-y-1">
-                  {/* price & sold info */}
-                  <div className="price-sold-amount flex items-center gap-2">
-                    <h2 className="text-primary text-2xl font-bold">
-                      <span>
-                        <i className="fa-solid fa-bolt text-[#ffa755]" />
-                      </span>
-                      <span className="align-middle text-xs text-[#ffa755]">
-                        $
-                      </span>
-                      299.99
-                    </h2>
-                    <p className="text-base">10.5K+ Sold</p>
-                  </div>
-                  {/* time */}
-                  <div className="time-progres flex flex-wrap items-center gap-2">
-                    <div className="h-2 w-[60%] rounded-full bg-gray-200">
-                      <div
-                        className="progress bg-primary h-2 rounded-full"
-                        style={{ width: "25%" }}
-                      />
-                    </div>
-                    <span className="due-time flex-no-wrap inline-flex w-[35%] items-center gap-1 text-sm">
-                      <i className="fa-regular fa-clock" /> 0:50:13.45
-                    </span>
-                  </div>
-                  {/* rating */}
-                  <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow text-xs">
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                      <i className="fa-solid fa-star" />
-                    </div>
-                    <span className="text-primary text-sm">Final Hours</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

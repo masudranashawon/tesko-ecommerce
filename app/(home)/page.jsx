@@ -1,8 +1,8 @@
 import LightDealsSection from "./components/LightDealsSection";
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
-    <main class="home-page">
+    <main className="home-page">
       <LightDealsSection />
     </main>
   );
