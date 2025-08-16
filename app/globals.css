@@ -13,6 +13,14 @@
   --persian-blue: #002d58;
   --light-yellow: #ffb321;
   --leaf-green: #66bc03;
+  --rustic-red: #5a0000;
+  --jet-gray: #5f6c72;
+  --butterfly-blue: #2da5f3;
+  --rangoon-green: #191c1f;
+  --slime-green: #bbea70;
+  --aqua-deep: #00573a;
+  --sand-brown: #d99f46;
+  --davy-gray: #4a5568;
 }
 
 /* ======================== 
@@ -27,6 +35,14 @@
   --color-persian-blue: var(--persian-blue);
   --color-light-yellow: var(--light-yellow);
   --color-leaf-green: var(--leaf-green);
+  --color-rustic-red: var(--rustic-red);
+  --color-jet-gray: var(--jet-gray);
+  --color-butterfly-blue: var(--butterfly-blue);
+  --color-rangoon-green: var(--rangoon-green);
+  --color-slime-green: var(--slime-green);
+  --color-aqua-deep: var(--aqua-deep);
+  --color-sand-brown: var(--sand-brown);
+  --color-davy-gray: var(--davy-gray);
 }
 
 /* ======================== 

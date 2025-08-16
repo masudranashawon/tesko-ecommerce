@@ -1,12 +1,12 @@
 "use client";
 
+import { FaBoltLightning } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { FaStar } from "react-icons/fa";
-import { FaBoltLightning, FaStarHalfStroke } from "react-icons/fa6";
-import "swiper/css";
 import Link from "next/link";
 import Image from "next/image";
+import RenderStars from "@/components/RenderStars";
+import "swiper/css";
 
 const slides = [
   {
@@ -16,7 +16,7 @@ const slides = [
     sold: "4.5K+ Sold",
     time: "1:12:53.55",
     progress: "95%",
-    rating: 5,
+    rating: 4.5,
   },
   {
     img: "/assests/images/light-deal-2.png",
@@ -34,7 +34,7 @@ const slides = [
     sold: "1.9K+ Sold",
     time: "18:13:45.12",
     progress: "65%",
-    rating: 4.5,
+    rating: 3,
   },
   {
     img: "/assests/images/light-deal-4.png",
@@ -55,20 +55,6 @@ const slides = [
     rating: 5,
   },
 ];
-
-const renderStars = (rating) => {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 !== 0;
-  return (
-    <>
-      {[...Array(fullStars)].map((_, i) => (
-        <FaStar key={i} />
-        // <i key={i} className="fa-solid fa-star" />
-      ))}
-      {halfStar && <FaStarHalfStroke />}
-    </>
-  );
-};
 
 const LightDealsSection = () => {
   return (
@@ -164,6 +150,7 @@ const LightDealsSection = () => {
                     Almost Sold Out
                   </span>
                 </div>
+
                 {/* Slide Content */}
                 <div className="card-content mt-2 space-y-1">
                   {/* price & sold info */}
@@ -179,6 +166,7 @@ const LightDealsSection = () => {
                     </h2>
                     <p className="text-base">{slide.sold}</p>
                   </div>
+
                   {/* time */}
                   <div className="time-progres flex flex-wrap items-center gap-2">
                     <div className="h-2 w-[60%] rounded-full bg-gray-200">
@@ -191,10 +179,11 @@ const LightDealsSection = () => {
                       <i className="fa-regular fa-clock" /> {slide.time}
                     </span>
                   </div>
+
                   {/* rating */}
                   <div className="flex items-center gap-2">
-                    <div className="rating-stars text-light-yellow flex items-center text-xs">
-                      {renderStars(slide.rating)}
+                    <div className="rating-stars text-light-yellow flex items-center text-sm">
+                      <RenderStars rating={slide.rating} />
                     </div>
                     <span className="text-primary text-sm">Final Hours</span>
                   </div>
